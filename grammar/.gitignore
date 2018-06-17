@@ -1,0 +1,13 @@
+/RegularExpressionBaseListener.class
+/RegularExpressionBaseVisitor.class
+/RegularExpressionLexer.class
+/RegularExpressionListener.class
+/RegularExpressionParser$ChoiceContext.class
+/RegularExpressionParser$ConcatenationContext.class
+/RegularExpressionParser$EndContext.class
+/RegularExpressionParser$IterationContext.class
+/RegularExpressionParser$RegExContext.class
+/RegularExpressionParser$StartContext.class
+/RegularExpressionParser$StringListContext.class
+/RegularExpressionParser.class
+/RegularExpressionVisitor.class

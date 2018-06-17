@@ -1,4 +1,4 @@
-package Thompson;
+package thompson;
 
 import java.util.ArrayList;
 

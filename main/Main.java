@@ -1,7 +1,7 @@
 package main;
 
-import Thompson.Thompson;
-import Thompson.Thompson.NFA;
+import thompson.Thompson;
+import thompson.Thompson.NFA;
 
 public class Main {
 
