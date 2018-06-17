@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Thompson {
 
-	private NFA nfa;
+	public static NFA nfa;
 	private static int count;
 
 	public Thompson() {
