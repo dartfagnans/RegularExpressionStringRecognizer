@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import grammar.RegularExpressionLexer;
 import grammar.RegularExpressionParser;
+import thompson.Thompson;
 
 public class Main {
 
@@ -30,6 +31,10 @@ public class Main {
 		// nfa2);
 		//
 		// System.out.println(nfaResult);
+		
+		Thompson t = new Thompson();
+		t.nfa = t.singleCharInput('a');
+		System.out.println(t.nfa);
 
 		// create a CharStream that reads from standard input
 		ANTLRInputStream input = new ANTLRInputStream(System.in);
@@ -48,6 +53,12 @@ public class Main {
 
 		NFABuilder nfaBuilder = new NFABuilder();
 		nfaBuilder.visit(tree);
+		
+		StringListListener stringListListener = new StringListListener();
+		
+		ParseTreeWalker walker = new ParseTreeWalker(); //create standard walker
+		
+		walker.walk(stringListListener, tree);
 
 		// print a \n after translation
 		System.out.println();
