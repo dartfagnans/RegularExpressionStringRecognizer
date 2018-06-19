@@ -46,11 +46,8 @@ public class Main {
 		// begin parsing at init rule
 		ParseTree tree = parser.start();
 
-		// create a generic parse tree walker that can trigger callbacks
-		ParseTreeWalker walker = new ParseTreeWalker();
-
-		// walk the tree created during the parse, trigger callbacks
-		walker.walk(new NFABuilder(), tree);
+		NFABuilder nfaBuilder = new NFABuilder();
+		nfaBuilder.visit(tree);
 
 		// print a \n after translation
 		System.out.println();
