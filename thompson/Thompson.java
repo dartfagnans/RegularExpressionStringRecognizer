@@ -196,7 +196,8 @@ public class Thompson {
 		nodes.add(nodeOne);
 		nodes.add(nodeTwo);
 		// ritorno un nuovo NFA con i nodi e gli archi generati
-		return new NFA(nodes, edges);
+		this.nfa = new NFA(nodes, edges);
+		return this.nfa;
 	}
 
 	// TODO!!! TUTTO OK!!
@@ -278,7 +279,8 @@ public class Thompson {
 		addNodesFromList(left.getNodes(), nodes);
 		addNodesFromList(right.getNodes(), nodes);
 		// ritorno un nuovo NFA passandogli la lista di nodi e di archi
-		return new NFA(nodes, edges);
+		this.nfa = new NFA(nodes, edges);
+		return this.nfa;
 	}
 
 	// TODO!!! TUTTO OK!!
@@ -323,7 +325,8 @@ public class Thompson {
 		exInitialRightEdges.add(fakeEdgeTwo);
 		exInitialRight.setEdges(exInitialRightEdges);
 		// ritorno un nuovo NFA passandogli la lista di nodi e di archi
-		return new NFA(nodes, edges);
+		this.nfa = new NFA(nodes, edges);
+		return this.nfa;
 	}
 
 	// TODO TUTTO OK!!
@@ -380,7 +383,8 @@ public class Thompson {
 		// aggiungo alla lista i vecchi nodi
 		addNodesFromList(nfa.getNodes(), nodes);
 		// ritorno un nuovo nfa passandogli gli archi e i nodi
-		return new NFA(nodes, edges);
+		this.nfa = new NFA(nodes, edges);
+		return this.nfa;
 	}
 
 	private void addEdgesFromList(ArrayList<Edge> edgesToAdd, ArrayList<Edge> edges) {

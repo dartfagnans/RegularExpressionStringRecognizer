@@ -1,4 +1,5 @@
 package grammar;
+
 // Generated from RegularExpression.g4 by ANTLR 4.7.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -40,49 +41,109 @@ public class RegularExpressionBaseListener implements RegularExpressionListener 
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterChoice(RegularExpressionParser.ChoiceContext ctx) { }
+	@Override public void enterGoToConcat(RegularExpressionParser.GoToConcatContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitChoice(RegularExpressionParser.ChoiceContext ctx) { }
+	@Override public void exitGoToConcat(RegularExpressionParser.GoToConcatContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConcatenation(RegularExpressionParser.ConcatenationContext ctx) { }
+	@Override public void enterUnion(RegularExpressionParser.UnionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitConcatenation(RegularExpressionParser.ConcatenationContext ctx) { }
+	@Override public void exitUnion(RegularExpressionParser.UnionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIteration(RegularExpressionParser.IterationContext ctx) { }
+	@Override public void enterGoToIteration(RegularExpressionParser.GoToIterationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIteration(RegularExpressionParser.IterationContext ctx) { }
+	@Override public void exitGoToIteration(RegularExpressionParser.GoToIterationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEnd(RegularExpressionParser.EndContext ctx) { }
+	@Override public void enterConcat(RegularExpressionParser.ConcatContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEnd(RegularExpressionParser.EndContext ctx) { }
+	@Override public void exitConcat(RegularExpressionParser.ConcatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIterat(RegularExpressionParser.IteratContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIterat(RegularExpressionParser.IteratContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGoToEnd(RegularExpressionParser.GoToEndContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGoToEnd(RegularExpressionParser.GoToEndContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParens(RegularExpressionParser.ParensContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParens(RegularExpressionParser.ParensContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterId(RegularExpressionParser.IdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitId(RegularExpressionParser.IdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEpsilon(RegularExpressionParser.EpsilonContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEpsilon(RegularExpressionParser.EpsilonContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

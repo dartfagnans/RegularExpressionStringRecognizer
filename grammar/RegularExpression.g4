@@ -4,21 +4,21 @@ start : regEx stringList;
 
 regEx: choice;
 
-choice : choice '+' concatenation
-    | concatenation
+choice : choice '+' concatenation #union
+    | concatenation #goToConcat
     ;
 
-concatenation : concatenation iteration
-    | iteration
+concatenation : concatenation iteration #concat
+    | iteration #goToIteration
     ;
 
-iteration : iteration'*'
-    | end
+iteration : iteration'*' #iterat
+    | end #goToEnd
     ;
 
-end : '('choice')'
-    | ID
-    | '_'
+end : '('regEx')' #parens
+    | ID #id
+    | '_' #epsilon
     ;
 
 stringList : ',' ID* stringList

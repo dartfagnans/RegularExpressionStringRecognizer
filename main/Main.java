@@ -31,7 +31,7 @@ public class Main {
 		// nfa2);
 		//
 		// System.out.println(nfaResult);
-		
+
 		Thompson t = new Thompson();
 		t.nfa = t.singleCharInput('a');
 		System.out.println(t.nfa);
@@ -53,15 +53,15 @@ public class Main {
 
 		NFABuilder nfaBuilder = new NFABuilder();
 		nfaBuilder.visit(tree);
-		
+
 		StringListListener stringListListener = new StringListListener();
-		
-		ParseTreeWalker walker = new ParseTreeWalker(); //create standard walker
-		
+
+		ParseTreeWalker walker = new ParseTreeWalker(); // create standard walker
+
 		walker.walk(stringListListener, tree);
 
 		// print a \n after translation
-		System.out.println();
+		System.out.println(Thompson.nfa);
 	}
 
 }

@@ -11,3 +11,12 @@
 /RegularExpressionParser$StringListContext.class
 /RegularExpressionParser.class
 /RegularExpressionVisitor.class
+/RegularExpressionParser$ConcatContext.class
+/RegularExpressionParser$EpsilonContext.class
+/RegularExpressionParser$GoToConcatContext.class
+/RegularExpressionParser$GoToEndContext.class
+/RegularExpressionParser$GoToIterationContext.class
+/RegularExpressionParser$IdContext.class
+/RegularExpressionParser$IteratContext.class
+/RegularExpressionParser$ParensContext.class
+/RegularExpressionParser$UnionContext.class

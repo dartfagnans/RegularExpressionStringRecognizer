@@ -24,29 +24,68 @@ public interface RegularExpressionVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRegEx(RegularExpressionParser.RegExContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RegularExpressionParser#choice}.
+	 * Visit a parse tree produced by the {@code goToConcat}
+	 * labeled alternative in {@link RegularExpressionParser#choice}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitChoice(RegularExpressionParser.ChoiceContext ctx);
+	T visitGoToConcat(RegularExpressionParser.GoToConcatContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RegularExpressionParser#concatenation}.
+	 * Visit a parse tree produced by the {@code union}
+	 * labeled alternative in {@link RegularExpressionParser#choice}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitConcatenation(RegularExpressionParser.ConcatenationContext ctx);
+	T visitUnion(RegularExpressionParser.UnionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RegularExpressionParser#iteration}.
+	 * Visit a parse tree produced by the {@code goToIteration}
+	 * labeled alternative in {@link RegularExpressionParser#concatenation}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIteration(RegularExpressionParser.IterationContext ctx);
+	T visitGoToIteration(RegularExpressionParser.GoToIterationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RegularExpressionParser#end}.
+	 * Visit a parse tree produced by the {@code concat}
+	 * labeled alternative in {@link RegularExpressionParser#concatenation}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitEnd(RegularExpressionParser.EndContext ctx);
+	T visitConcat(RegularExpressionParser.ConcatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code iterat}
+	 * labeled alternative in {@link RegularExpressionParser#iteration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIterat(RegularExpressionParser.IteratContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code goToEnd}
+	 * labeled alternative in {@link RegularExpressionParser#iteration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGoToEnd(RegularExpressionParser.GoToEndContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parens}
+	 * labeled alternative in {@link RegularExpressionParser#end}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParens(RegularExpressionParser.ParensContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code id}
+	 * labeled alternative in {@link RegularExpressionParser#end}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitId(RegularExpressionParser.IdContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code epsilon}
+	 * labeled alternative in {@link RegularExpressionParser#end}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEpsilon(RegularExpressionParser.EpsilonContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RegularExpressionParser#stringList}.
 	 * @param ctx the parse tree

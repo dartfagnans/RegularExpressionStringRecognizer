@@ -175,27 +175,54 @@ public class RegularExpressionParser extends Parser {
 	}
 
 	public static class ChoiceContext extends ParserRuleContext {
-		public ConcatenationContext concatenation() {
-			return getRuleContext(ConcatenationContext.class,0);
-		}
-		public ChoiceContext choice() {
-			return getRuleContext(ChoiceContext.class,0);
-		}
 		public ChoiceContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_choice; }
+	 
+		public ChoiceContext() { }
+		public void copyFrom(ChoiceContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class GoToConcatContext extends ChoiceContext {
+		public ConcatenationContext concatenation() {
+			return getRuleContext(ConcatenationContext.class,0);
+		}
+		public GoToConcatContext(ChoiceContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterChoice(this);
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterGoToConcat(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitChoice(this);
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitGoToConcat(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitChoice(this);
+			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitGoToConcat(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class UnionContext extends ChoiceContext {
+		public ChoiceContext choice() {
+			return getRuleContext(ChoiceContext.class,0);
+		}
+		public ConcatenationContext concatenation() {
+			return getRuleContext(ConcatenationContext.class,0);
+		}
+		public UnionContext(ChoiceContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterUnion(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitUnion(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitUnion(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -216,6 +243,10 @@ public class RegularExpressionParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
+			_localctx = new GoToConcatContext(_localctx);
+			_ctx = _localctx;
+			_prevctx = _localctx;
+
 			setState(20);
 			concatenation(0);
 			}
@@ -229,7 +260,7 @@ public class RegularExpressionParser extends Parser {
 					_prevctx = _localctx;
 					{
 					{
-					_localctx = new ChoiceContext(_parentctx, _parentState);
+					_localctx = new UnionContext(new ChoiceContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_choice);
 					setState(22);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
@@ -258,27 +289,54 @@ public class RegularExpressionParser extends Parser {
 	}
 
 	public static class ConcatenationContext extends ParserRuleContext {
-		public IterationContext iteration() {
-			return getRuleContext(IterationContext.class,0);
-		}
-		public ConcatenationContext concatenation() {
-			return getRuleContext(ConcatenationContext.class,0);
-		}
 		public ConcatenationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_concatenation; }
+	 
+		public ConcatenationContext() { }
+		public void copyFrom(ConcatenationContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class GoToIterationContext extends ConcatenationContext {
+		public IterationContext iteration() {
+			return getRuleContext(IterationContext.class,0);
+		}
+		public GoToIterationContext(ConcatenationContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterConcatenation(this);
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterGoToIteration(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitConcatenation(this);
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitGoToIteration(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitConcatenation(this);
+			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitGoToIteration(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ConcatContext extends ConcatenationContext {
+		public ConcatenationContext concatenation() {
+			return getRuleContext(ConcatenationContext.class,0);
+		}
+		public IterationContext iteration() {
+			return getRuleContext(IterationContext.class,0);
+		}
+		public ConcatContext(ConcatenationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterConcat(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitConcat(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitConcat(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -299,6 +357,10 @@ public class RegularExpressionParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
+			_localctx = new GoToIterationContext(_localctx);
+			_ctx = _localctx;
+			_prevctx = _localctx;
+
 			setState(31);
 			iteration(0);
 			}
@@ -312,7 +374,7 @@ public class RegularExpressionParser extends Parser {
 					_prevctx = _localctx;
 					{
 					{
-					_localctx = new ConcatenationContext(_parentctx, _parentState);
+					_localctx = new ConcatContext(new ConcatenationContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_concatenation);
 					setState(33);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
@@ -339,27 +401,51 @@ public class RegularExpressionParser extends Parser {
 	}
 
 	public static class IterationContext extends ParserRuleContext {
-		public EndContext end() {
-			return getRuleContext(EndContext.class,0);
-		}
-		public IterationContext iteration() {
-			return getRuleContext(IterationContext.class,0);
-		}
 		public IterationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_iteration; }
+	 
+		public IterationContext() { }
+		public void copyFrom(IterationContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class IteratContext extends IterationContext {
+		public IterationContext iteration() {
+			return getRuleContext(IterationContext.class,0);
+		}
+		public IteratContext(IterationContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterIteration(this);
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterIterat(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitIteration(this);
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitIterat(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitIteration(this);
+			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitIterat(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GoToEndContext extends IterationContext {
+		public EndContext end() {
+			return getRuleContext(EndContext.class,0);
+		}
+		public GoToEndContext(IterationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterGoToEnd(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitGoToEnd(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitGoToEnd(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -380,6 +466,10 @@ public class RegularExpressionParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
+			_localctx = new GoToEndContext(_localctx);
+			_ctx = _localctx;
+			_prevctx = _localctx;
+
 			setState(41);
 			end();
 			}
@@ -393,7 +483,7 @@ public class RegularExpressionParser extends Parser {
 					_prevctx = _localctx;
 					{
 					{
-					_localctx = new IterationContext(_parentctx, _parentState);
+					_localctx = new IteratContext(new IterationContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_iteration);
 					setState(43);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
@@ -420,25 +510,65 @@ public class RegularExpressionParser extends Parser {
 	}
 
 	public static class EndContext extends ParserRuleContext {
-		public ChoiceContext choice() {
-			return getRuleContext(ChoiceContext.class,0);
-		}
-		public TerminalNode ID() { return getToken(RegularExpressionParser.ID, 0); }
 		public EndContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_end; }
+	 
+		public EndContext() { }
+		public void copyFrom(EndContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class EpsilonContext extends EndContext {
+		public EpsilonContext(EndContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterEnd(this);
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterEpsilon(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitEnd(this);
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitEpsilon(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitEnd(this);
+			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitEpsilon(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ParensContext extends EndContext {
+		public RegExContext regEx() {
+			return getRuleContext(RegExContext.class,0);
+		}
+		public ParensContext(EndContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterParens(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitParens(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitParens(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IdContext extends EndContext {
+		public TerminalNode ID() { return getToken(RegularExpressionParser.ID, 0); }
+		public IdContext(EndContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).enterId(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RegularExpressionListener ) ((RegularExpressionListener)listener).exitId(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RegularExpressionVisitor ) return ((RegularExpressionVisitor<? extends T>)visitor).visitId(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -451,17 +581,19 @@ public class RegularExpressionParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__2:
+				_localctx = new ParensContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(50);
 				match(T__2);
 				setState(51);
-				choice(0);
+				regEx();
 				setState(52);
 				match(T__3);
 				}
 				break;
 			case ID:
+				_localctx = new IdContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(54);
@@ -469,6 +601,7 @@ public class RegularExpressionParser extends Parser {
 				}
 				break;
 			case T__4:
+				_localctx = new EpsilonContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(55);
@@ -623,7 +756,7 @@ public class RegularExpressionParser extends Parser {
 		"\5\n\6\2%#\3\2\2\2&)\3\2\2\2\'%\3\2\2\2\'(\3\2\2\2(\t\3\2\2\2)\'\3\2\2"+
 		"\2*+\b\6\1\2+,\5\f\7\2,\61\3\2\2\2-.\f\4\2\2.\60\7\4\2\2/-\3\2\2\2\60"+
 		"\63\3\2\2\2\61/\3\2\2\2\61\62\3\2\2\2\62\13\3\2\2\2\63\61\3\2\2\2\64\65"+
-		"\7\5\2\2\65\66\5\6\4\2\66\67\7\6\2\2\67;\3\2\2\28;\7\t\2\29;\7\7\2\2:"+
+		"\7\5\2\2\65\66\5\4\3\2\66\67\7\6\2\2\67;\3\2\2\28;\7\t\2\29;\7\7\2\2:"+
 		"\64\3\2\2\2:8\3\2\2\2:9\3\2\2\2;\r\3\2\2\2<@\7\b\2\2=?\7\t\2\2>=\3\2\2"+
 		"\2?B\3\2\2\2@>\3\2\2\2@A\3\2\2\2AC\3\2\2\2B@\3\2\2\2CG\5\16\b\2DG\3\2"+
 		"\2\2EG\7\7\2\2F<\3\2\2\2FD\3\2\2\2FE\3\2\2\2G\17\3\2\2\2\b\35\'\61:@F";
