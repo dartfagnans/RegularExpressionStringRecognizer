@@ -10,27 +10,26 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import grammar.RegularExpressionLexer;
 import grammar.RegularExpressionParser;
 import thompson.Thompson;
+import thompson.Thompson.NFA;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		// Thompson thompson = new Thompson();
-		//
-		// NFA nfa1 = thompson.singleCharInput('a');
-		// NFA nfa2 = thompson.singleCharInput('b');
-		// NFA nfa3 = thompson.singleCharInput('c');
-		// NFA nfa4 = thompson.singleCharInput('d');
-		//
-		// NFA nfaResult = thompson.union(
-		// thompson.kleenStar(
-		// thompson.concatenation
-		// (thompson.union(
-		// nfa3, nfa4),
-		// nfa1)
-		// ),
-		// nfa2);
-		//
-		// System.out.println(nfaResult);
+		 Thompson thompson = new Thompson();
+		
+		 NFA nfa1 = thompson.singleCharInput('a');
+		 NFA nfa2 = thompson.singleCharInput('b');
+		 NFA nfa3 = thompson.singleCharInput('c');
+		 
+		 NFA nfaResult = thompson.union(nfa1, thompson.concatenation(nfa2, nfa3));
+		 String s1 = "a";
+		 String s2 = "b";
+		 String s3 = "bc";
+		
+		 System.out.println(nfaResult);
+		 System.out.println(thompson.recognizer(s1));
+		 System.out.println(thompson.recognizer(s2));
+		 System.out.println(thompson.recognizer(s3));
 
 		Thompson t = new Thompson();
 		t.nfa = t.singleCharInput('a');

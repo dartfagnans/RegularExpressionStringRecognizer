@@ -66,6 +66,16 @@ public class Thompson {
 			return temp;
 		}
 
+		public ArrayList<Node> getNextNodes(Node node, char input) {
+			ArrayList<Node> nextNodes = new ArrayList<Node>();
+			for (Edge edge : node.edges) {
+				if (input == edge.input || edge.input == '_') {
+					nextNodes.add(edge.endNode);
+				}
+			}
+			return nextNodes;
+		}
+
 	}
 
 	private class Node {
@@ -404,8 +414,76 @@ public class Thompson {
 		return this.nfa.toString();
 	}
 
+	/*
+	 * Set of NFA states reachable from NFA state 'node' on eps-transitions alone
+	 */
+	private ArrayList<Node> epsClosure(Node node) {
+		ArrayList<Edge> edges = node.getEdges();
+		ArrayList<Node> epsClosure = new ArrayList<Node>();
+		for (Edge edge : edges) {
+			if (edge.input == '_') {
+				if (!epsClosure.contains(edge.endNode))
+					epsClosure.add(edge.endNode);
+			}
+		}
+		return epsClosure;
+	}
+
+	/*
+	 * Set of NFA states reachable from some NFA state s in set 'nodes' on
+	 * eps-transitions alone;
+	 */
+	private ArrayList<Node> epsClosure(ArrayList<Node> nodes) {
+		ArrayList<Node> epsClosure = new ArrayList<Node>();
+		for (Node node : nodes) {
+			ArrayList<Edge> edges = node.getEdges();
+			for (Edge edge : edges) {
+				if (edge.input == '_') {
+					if (!epsClosure.contains(edge.endNode))
+						epsClosure.add(edge.endNode);
+				}
+			}
+		}
+		return epsClosure;
+	}
+
+	/*
+	 * Set of NFA states to which there is a transition on input symbol 'input' from
+	 * some state s in 'nodes'
+	 */
+	private ArrayList<Node> move(ArrayList<Node> nodes, char input) {
+		ArrayList<Node> move = new ArrayList<Node>();
+		for (Node node : nodes) {
+			ArrayList<Edge> edges = node.getEdges();
+			for (Edge edge : edges) {
+				if (edge.input == input) {
+					if (!move.contains(edge.endNode))
+						move.add(edge.endNode);
+				}
+			}
+		}
+		return move;
+	}
+
+	/*
+	 * S = eps-closure (so); //so = stato iniziale c = nextChar (); while (c!= eof)
+	 * { S = eps-closure (move(S,c)); c = nextChar(); } if (S intersecato F !=
+	 * vuoto) return 'YES' else return 'NO';
+	 */
+
 	private boolean checkString(String string) {
-		return false;
+		ArrayList<Node> S = epsClosure(this.nfa.getInitialNode());
+		char c = string.charAt(0);
+		
+		for (int i=0; i<string.length(); i++) {
+			c = string.charAt(i);
+			addNodesFromList(epsClosure (move(S,c)), S);
+//			S = epsClosure (move(S,c));
+		}
+		
+		if (S.contains(this.nfa.getFinalNode()))
+			return true;
+		else return false;
 	}
 
 	public String recognizer(String string) {
