@@ -20,20 +20,18 @@ public class Main {
 		 NFA nfa1 = thompson.singleCharInput('a');
 		 NFA nfa2 = thompson.singleCharInput('b');
 		 NFA nfa3 = thompson.singleCharInput('c');
+		 NFA nfa4 = thompson.singleCharInput('d');
 		 
-		 NFA nfaResult = thompson.union(nfa1, thompson.concatenation(nfa2, nfa3));
-		 String s1 = "a";
-		 String s2 = "b";
-		 String s3 = "bc";
+		 NFA nfa5 = thompson.union(nfa1, nfa2);
+		 NFA nfa6 = thompson.union(nfa3, nfa4);
+		 
+		 NFA nfaResult = thompson.concatenation(nfa5, nfa6);
+		 
+		 String s = "ad";
 		
+		 System.out.println(thompson.recognizer(s));
+		 
 		 System.out.println(nfaResult);
-		 System.out.println(thompson.recognizer(s1));
-		 System.out.println(thompson.recognizer(s2));
-		 System.out.println(thompson.recognizer(s3));
-
-		Thompson t = new Thompson();
-		t.nfa = t.singleCharInput('a');
-		System.out.println(t.nfa);
 
 		// create a CharStream that reads from standard input
 		ANTLRInputStream input = new ANTLRInputStream(System.in);

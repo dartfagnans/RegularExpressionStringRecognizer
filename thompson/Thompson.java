@@ -1,6 +1,7 @@
 package thompson;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Thompson {
 
@@ -295,47 +296,32 @@ public class Thompson {
 
 	// TODO!!! TUTTO OK!!
 	public NFA concatenation(NFA left, NFA right) {
-		// prendo il nodo finale del ramo sinistro
 		Node exFinalLeft = left.getFinalNode();
-		// e lo imposto come non finale
 		exFinalLeft.setIsFinal(false);
-		// stessa cosa per il nodo initiale destro
 		Node exInitialRight = right.getInitialNode();
-		exInitialRight.setIsInitial(false);
-		// creo un nuovo nodo fake
-		Node fakeNode = new Node();
-		// creo i due archi fake
-		Edge fakeEdgeOne = new Edge(exFinalLeft, fakeNode, '_');
-		Edge fakeEdgeTwo = new Edge(fakeNode, exInitialRight, '_');
-		// creo una lista di nodi e ci aggiungo il nuovo nodo
+		
+		ArrayList<Edge> exInitialRightEdges = exInitialRight.getEdges();
+		
+		for (Edge edge : exInitialRightEdges) {
+			edge.setStartNode(exFinalLeft);
+		}
+		
+		ArrayList<Edge> exFinalLeftEdges = exFinalLeft.getEdges();
+		addEdgesFromList(exInitialRightEdges, exFinalLeftEdges);
+		exFinalLeft.setEdges(exFinalLeftEdges);
+		
+		right.getNodes().remove(exInitialRight);
+		right.getEdges().remove(exInitialRightEdges);
+		
 		ArrayList<Node> nodes = new ArrayList<Node>();
-		nodes.add(fakeNode);
-		// creo una lista di archi e ci aggiungo i due nuovi archi
-		ArrayList<Edge> edges = new ArrayList<Edge>();
-		edges.add(fakeEdgeOne);
-		edges.add(fakeEdgeTwo);
-		// aggiungo alla lista di nodi i nodi già esistenti
 		addNodesFromList(left.getNodes(), nodes);
 		addNodesFromList(right.getNodes(), nodes);
-		// aggiungo alla lista di archi gli archi già esistenti
+		
+		ArrayList<Edge> edges = new ArrayList<Edge>();
 		addEdgesFromList(left.getEdges(), edges);
 		addEdgesFromList(right.getEdges(), edges);
-		// setto gli archi per il nuovo nodo
-		ArrayList<Edge> newFakeNodeEdges = new ArrayList<Edge>();
-		newFakeNodeEdges.add(fakeEdgeOne);
-		newFakeNodeEdges.add(fakeEdgeTwo);
-		fakeNode.setEdges(newFakeNodeEdges);
-		// prendo i vecchi archi dell'ex nodo finale sinistro e ci aggiungo l'arco nuovo
-		ArrayList<Edge> exFinalLeftEdges = exFinalLeft.getEdges();
-		exFinalLeftEdges.add(fakeEdgeOne);
-		// risetto gli archi dell'exFinalLeft
-		exFinalLeft.setEdges(exFinalLeftEdges);
-		// stessa cosa con exInitialRight
-		ArrayList<Edge> exInitialRightEdges = exInitialRight.getEdges();
-		exInitialRightEdges.add(fakeEdgeTwo);
-		exInitialRight.setEdges(exInitialRightEdges);
-		// ritorno un nuovo NFA passandogli la lista di nodi e di archi
-		this.nfa = new NFA(nodes, edges);
+		
+		this.nfa = new NFA (nodes, edges);
 		return this.nfa;
 	}
 
@@ -357,7 +343,7 @@ public class Thompson {
 		Edge fakeEdgeOne = new Edge(fakeNodeOne, exInitialNode, '_');
 		Edge fakeEdgeTwo = new Edge(exFinalNode, fakeNodeTwo, '_');
 		Edge fakeEdgeThree = new Edge(exFinalNode, exInitialNode, '_');
-		Edge fakeEdgeFour = new Edge(fakeNodeTwo, fakeNodeOne, '_');
+		Edge fakeEdgeFour = new Edge(fakeNodeOne, fakeNodeTwo, '_');
 		// setto gli archi per i nuovi nodi
 		ArrayList<Edge> fakeNodeOneEdges = new ArrayList<Edge>();
 		fakeNodeOneEdges.add(fakeEdgeOne);
@@ -432,19 +418,62 @@ public class Thompson {
 	/*
 	 * Set of NFA states reachable from some NFA state s in set 'nodes' on
 	 * eps-transitions alone;
+	 * 
+	 * Stack P.addAll(S) #a stack containing all states in S
+    	Set C.addAll(S)   #the closure initially contains the states in S
+
+    	while ! P.empty() do
+         	s = P.pop()
+         	for r in m(s, epsilon) do
+            	# m(s, epsilon) is a set of states
+            	if r not in C then
+                	P.push(r)
+                	C.add(r)
+            	end if
+        	end for
+
+    	end while
+    	return C
 	 */
 	private ArrayList<Node> epsClosure(ArrayList<Node> nodes) {
-		ArrayList<Node> epsClosure = new ArrayList<Node>();
+		/*ArrayList<Node> epsClosure = new ArrayList<Node>();
 		for (Node node : nodes) {
 			ArrayList<Edge> edges = node.getEdges();
 			for (Edge edge : edges) {
 				if (edge.input == '_') {
-					if (!epsClosure.contains(edge.endNode))
+					if (!epsClosure.contains(edge.endNode)) {
 						epsClosure.add(edge.endNode);
+					}
 				}
 			}
 		}
-		return epsClosure;
+		return epsClosure;*/
+		Stack<Node> S = new Stack<Node>();
+		S.addAll(nodes);
+		ArrayList<Node> closure = new ArrayList<Node>();
+		addNodesFromList(nodes, closure);
+		Node n = new Node();
+		
+		while (! S.isEmpty()) {
+			n = S.pop();
+			for (Node node : move(n, '_')) {
+				if (!closure.contains(node)) {
+					closure.add(S.push(node));
+				}
+			}
+		}
+		return closure;
+		
+	}
+	
+	private ArrayList<Node> move (Node node, char input) {
+		ArrayList<Node> move = new ArrayList<Node>();
+		for (Edge edge : node.getEdges()) {
+			if (edge.input == input) {
+				move.add(edge.endNode);
+			}
+		}
+		return move;
 	}
 
 	/*
@@ -457,8 +486,9 @@ public class Thompson {
 			ArrayList<Edge> edges = node.getEdges();
 			for (Edge edge : edges) {
 				if (edge.input == input) {
-					if (!move.contains(edge.endNode))
+					if (!move.contains(edge.endNode)) {
 						move.add(edge.endNode);
+					}
 				}
 			}
 		}
@@ -472,13 +502,14 @@ public class Thompson {
 	 */
 
 	private boolean checkString(String string) {
-		ArrayList<Node> S = epsClosure(this.nfa.getInitialNode());
+		ArrayList<Node> startClosure = new ArrayList<Node>();
+		startClosure.add(this.nfa.getInitialNode());
+		ArrayList<Node> S = epsClosure(startClosure);
 		char c = string.charAt(0);
 		
 		for (int i=0; i<string.length(); i++) {
 			c = string.charAt(i);
-			addNodesFromList(epsClosure (move(S,c)), S);
-//			S = epsClosure (move(S,c));
+			S = epsClosure (move(S,c));
 		}
 		
 		if (S.contains(this.nfa.getFinalNode()))
