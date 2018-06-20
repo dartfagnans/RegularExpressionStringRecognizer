@@ -15,23 +15,30 @@ import thompson.Thompson.NFA;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		 Thompson thompson = new Thompson();
-		
-		 NFA nfa1 = thompson.singleCharInput('a');
-		 NFA nfa2 = thompson.singleCharInput('b');
-		 NFA nfa3 = thompson.singleCharInput('c');
-		 NFA nfa4 = thompson.singleCharInput('d');
-		 
-		 NFA nfa5 = thompson.union(nfa1, nfa2);
-		 NFA nfa6 = thompson.union(nfa3, nfa4);
-		 
-		 NFA nfaResult = thompson.concatenation(nfa5, nfa6);
-		 
-		 String s = "ad";
-		
-		 System.out.println(thompson.recognizer(s));
-		 
-		 System.out.println(nfaResult);
+//		 Thompson thompson = new Thompson();
+//		
+//		 NFA nfa1 = thompson.singleCharInput('a');
+//		 NFA nfa2 = thompson.singleCharInput('b');
+//		 NFA nfa3 = thompson.singleCharInput('c');
+//		 NFA nfa4 = thompson.singleCharInput('d');
+//		 
+//		 NFA nfa5 = thompson.union(nfa1, nfa2);
+//		 NFA nfa6 = thompson.union(nfa3, nfa4);
+//		 
+//		 NFA nfaResult = thompson.concatenation(nfa5, nfa6);
+//		 
+//		 String s = "ad";
+//		 String s1 = "bb";
+//		 String s2 = "bc";
+//		 String s3 = "ac";
+//		 String s4 = "cd";
+//		 
+//		 System.out.println(nfaResult);
+//		 System.out.println(thompson.recognizer(s));
+//		 System.out.println(thompson.recognizer(s1));
+//		 System.out.println(thompson.recognizer(s2));
+//		 System.out.println(thompson.recognizer(s3));
+//		 System.out.println(thompson.recognizer(s4));
 
 		// create a CharStream that reads from standard input
 		ANTLRInputStream input = new ANTLRInputStream(System.in);

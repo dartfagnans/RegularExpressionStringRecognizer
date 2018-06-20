@@ -418,36 +418,8 @@ public class Thompson {
 	/*
 	 * Set of NFA states reachable from some NFA state s in set 'nodes' on
 	 * eps-transitions alone;
-	 * 
-	 * Stack P.addAll(S) #a stack containing all states in S
-    	Set C.addAll(S)   #the closure initially contains the states in S
-
-    	while ! P.empty() do
-         	s = P.pop()
-         	for r in m(s, epsilon) do
-            	# m(s, epsilon) is a set of states
-            	if r not in C then
-                	P.push(r)
-                	C.add(r)
-            	end if
-        	end for
-
-    	end while
-    	return C
 	 */
 	private ArrayList<Node> epsClosure(ArrayList<Node> nodes) {
-		/*ArrayList<Node> epsClosure = new ArrayList<Node>();
-		for (Node node : nodes) {
-			ArrayList<Edge> edges = node.getEdges();
-			for (Edge edge : edges) {
-				if (edge.input == '_') {
-					if (!epsClosure.contains(edge.endNode)) {
-						epsClosure.add(edge.endNode);
-					}
-				}
-			}
-		}
-		return epsClosure;*/
 		Stack<Node> S = new Stack<Node>();
 		S.addAll(nodes);
 		ArrayList<Node> closure = new ArrayList<Node>();
