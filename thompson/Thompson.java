@@ -13,6 +13,11 @@ public class Thompson {
 		this.count = 0;
 	}
 
+	public Thompson(NFA nfa) {
+		this.nfa = nfa;
+		this.count = 0;
+	}
+
 	public class NFA {
 
 		private ArrayList<Node> nodes;
@@ -110,11 +115,6 @@ public class Thompson {
 		private ArrayList<Edge> getEdges() {
 			return this.edges;
 		}
-
-		/*
-		 * @Override public boolean equals(Object n) { Node temp = (Node) n; if (this.id
-		 * == temp.id) return true; else return false; }
-		 */
 
 		@Override
 		public String toString() {
@@ -299,29 +299,29 @@ public class Thompson {
 		Node exFinalLeft = left.getFinalNode();
 		exFinalLeft.setIsFinal(false);
 		Node exInitialRight = right.getInitialNode();
-		
+
 		ArrayList<Edge> exInitialRightEdges = exInitialRight.getEdges();
-		
+
 		for (Edge edge : exInitialRightEdges) {
 			edge.setStartNode(exFinalLeft);
 		}
-		
+
 		ArrayList<Edge> exFinalLeftEdges = exFinalLeft.getEdges();
 		addEdgesFromList(exInitialRightEdges, exFinalLeftEdges);
 		exFinalLeft.setEdges(exFinalLeftEdges);
-		
+
 		right.getNodes().remove(exInitialRight);
 		right.getEdges().remove(exInitialRightEdges);
-		
+
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		addNodesFromList(left.getNodes(), nodes);
 		addNodesFromList(right.getNodes(), nodes);
-		
+
 		ArrayList<Edge> edges = new ArrayList<Edge>();
 		addEdgesFromList(left.getEdges(), edges);
 		addEdgesFromList(right.getEdges(), edges);
-		
-		this.nfa = new NFA (nodes, edges);
+
+		this.nfa = new NFA(nodes, edges);
 		return this.nfa;
 	}
 
@@ -400,9 +400,6 @@ public class Thompson {
 		return this.nfa.toString();
 	}
 
-	/*
-	 * Set of NFA states reachable from NFA state 'node' on eps-transitions alone
-	 */
 	private ArrayList<Node> epsClosure(Node node) {
 		ArrayList<Edge> edges = node.getEdges();
 		ArrayList<Node> epsClosure = new ArrayList<Node>();
@@ -415,18 +412,14 @@ public class Thompson {
 		return epsClosure;
 	}
 
-	/*
-	 * Set of NFA states reachable from some NFA state s in set 'nodes' on
-	 * eps-transitions alone;
-	 */
 	private ArrayList<Node> epsClosure(ArrayList<Node> nodes) {
 		Stack<Node> S = new Stack<Node>();
 		S.addAll(nodes);
 		ArrayList<Node> closure = new ArrayList<Node>();
 		addNodesFromList(nodes, closure);
 		Node n = new Node();
-		
-		while (! S.isEmpty()) {
+
+		while (!S.isEmpty()) {
 			n = S.pop();
 			for (Node node : move(n, '_')) {
 				if (!closure.contains(node)) {
@@ -435,10 +428,10 @@ public class Thompson {
 			}
 		}
 		return closure;
-		
+
 	}
-	
-	private ArrayList<Node> move (Node node, char input) {
+
+	private ArrayList<Node> move(Node node, char input) {
 		ArrayList<Node> move = new ArrayList<Node>();
 		for (Edge edge : node.getEdges()) {
 			if (edge.input == input) {
@@ -448,10 +441,6 @@ public class Thompson {
 		return move;
 	}
 
-	/*
-	 * Set of NFA states to which there is a transition on input symbol 'input' from
-	 * some state s in 'nodes'
-	 */
 	private ArrayList<Node> move(ArrayList<Node> nodes, char input) {
 		ArrayList<Node> move = new ArrayList<Node>();
 		for (Node node : nodes) {
@@ -467,26 +456,21 @@ public class Thompson {
 		return move;
 	}
 
-	/*
-	 * S = eps-closure (so); //so = stato iniziale c = nextChar (); while (c!= eof)
-	 * { S = eps-closure (move(S,c)); c = nextChar(); } if (S intersecato F !=
-	 * vuoto) return 'YES' else return 'NO';
-	 */
-
 	private boolean checkString(String string) {
 		ArrayList<Node> startClosure = new ArrayList<Node>();
 		startClosure.add(this.nfa.getInitialNode());
 		ArrayList<Node> S = epsClosure(startClosure);
 		char c = string.charAt(0);
-		
-		for (int i=0; i<string.length(); i++) {
+
+		for (int i = 0; i < string.length(); i++) {
 			c = string.charAt(i);
-			S = epsClosure (move(S,c));
+			S = epsClosure(move(S, c));
 		}
-		
+
 		if (S.contains(this.nfa.getFinalNode()))
 			return true;
-		else return false;
+		else
+			return false;
 	}
 
 	public String recognizer(String string) {
@@ -494,8 +478,8 @@ public class Thompson {
 			return "OK";
 		return "KO";
 	}
-	
-	public void setNFA (NFA nfa) {
+
+	public void setNFA(NFA nfa) {
 		this.nfa = nfa;
 	}
 

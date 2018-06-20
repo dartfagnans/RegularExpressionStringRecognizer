@@ -8,7 +8,7 @@ import thompson.Thompson;
 
 public class StringListListener extends RegularExpressionBaseListener {
 	ArrayList<String> strings = new ArrayList<String>();
-	Thompson t = new Thompson();
+	Thompson t = new Thompson(Thompson.nfa);
 
 	@Override
 	public void enterStringList(RegularExpressionParser.StringListContext ctx) {
@@ -18,6 +18,7 @@ public class StringListListener extends RegularExpressionBaseListener {
 				string += ctx.ID(i).getText();
 			}
 			strings.add(string);
+			System.out.print(t.recognizer(string) + " ");
 		}
 	}
 
