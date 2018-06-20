@@ -494,5 +494,9 @@ public class Thompson {
 			return "OK";
 		return "KO";
 	}
+	
+	public void setNFA (NFA nfa) {
+		this.nfa = nfa;
+	}
 
 }

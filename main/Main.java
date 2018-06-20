@@ -14,6 +14,7 @@ import thompson.Thompson.NFA;
 
 public class Main {
 
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
 //		 Thompson thompson = new Thompson();
 //		
@@ -57,15 +58,25 @@ public class Main {
 
 		NFABuilder nfaBuilder = new NFABuilder();
 		nfaBuilder.visit(tree);
+		
+		NFA nfa = Thompson.nfa;
 
 		StringListListener stringListListener = new StringListListener();
+		
+//		stringListVisitor.visit(tree);
 
 		ParseTreeWalker walker = new ParseTreeWalker(); // create standard walker
 
 		walker.walk(stringListListener, tree);
 
-		// print a \n after translation
-		System.out.println(Thompson.nfa);
+//		System.out.println(Thompson.nfa);
+		
+		
+		Thompson t = new Thompson();
+		t.nfa = nfa;
+		for (String string : stringListListener.getStrings()) {
+			System.out.print(string + ": " + t.recognizer(string) + ", ");
+		}
 	}
 
 }
