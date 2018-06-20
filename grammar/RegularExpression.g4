@@ -21,13 +21,11 @@ end : '('regEx')' #parens
     | '_' #epsilon
     ;
 
-stringList : ',' word* stringList
+stringList : ',' WORD* stringList
 	|
-    | '_'
 	;
 
-word : ID | '_' ;
-
 ID : [a-zA-Z0-9];
+WORD : ('a'..'z'|'A'..'Z'|'0'..'9'|'_');
 
 WS : [ \t\r\n]+ -> skip;
