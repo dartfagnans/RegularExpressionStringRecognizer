@@ -99,6 +99,15 @@ public class Thompson {
 			this.edges = archi;
 			this.id = Thompson.count++;
 		}
+		
+		private ArrayList<Edge> getOuterEdges () {
+			ArrayList<Edge> outerEdges = new ArrayList<>();
+			for (Edge edge : this.edges) {
+				if (edge.startNode == this)
+					outerEdges.add(edge);
+			}
+			return outerEdges;
+		}
 
 		private void setIsInitial(boolean isInitial) {
 			this.isInitial = isInitial;
@@ -401,7 +410,7 @@ public class Thompson {
 	}
 
 	private ArrayList<Node> epsClosure(Node node) {
-		ArrayList<Edge> edges = node.getEdges();
+		ArrayList<Edge> edges = node.getOuterEdges();
 		ArrayList<Node> epsClosure = new ArrayList<Node>();
 		for (Edge edge : edges) {
 			if (edge.input == '_') {
@@ -433,7 +442,7 @@ public class Thompson {
 
 	private ArrayList<Node> move(Node node, char input) {
 		ArrayList<Node> move = new ArrayList<Node>();
-		for (Edge edge : node.getEdges()) {
+		for (Edge edge : node.getOuterEdges()) {
 			if (edge.input == input) {
 				move.add(edge.endNode);
 			}
@@ -444,7 +453,7 @@ public class Thompson {
 	private ArrayList<Node> move(ArrayList<Node> nodes, char input) {
 		ArrayList<Node> move = new ArrayList<Node>();
 		for (Node node : nodes) {
-			ArrayList<Edge> edges = node.getEdges();
+			ArrayList<Edge> edges = node.getOuterEdges();
 			for (Edge edge : edges) {
 				if (edge.input == input) {
 					if (!move.contains(edge.endNode)) {
