@@ -145,4 +145,14 @@ public interface RegularExpressionListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStringList(RegularExpressionParser.StringListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RegularExpressionParser#word}.
+	 * @param ctx the parse tree
+	 */
+	void enterWord(RegularExpressionParser.WordContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RegularExpressionParser#word}.
+	 * @param ctx the parse tree
+	 */
+	void exitWord(RegularExpressionParser.WordContext ctx);
 }

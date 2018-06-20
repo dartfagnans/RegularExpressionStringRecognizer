@@ -91,4 +91,10 @@ public interface RegularExpressionVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStringList(RegularExpressionParser.StringListContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RegularExpressionParser#word}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWord(RegularExpressionParser.WordContext ctx);
 }

@@ -12,10 +12,10 @@ public class StringListListener extends RegularExpressionBaseListener {
 
 	@Override
 	public void enterStringList(RegularExpressionParser.StringListContext ctx) {
-		if (ctx.ID().size() != 0) {
+		if (ctx.word().size() != 0) {
 			String string = "";
-			for (int i = 0; i < ctx.ID().size(); i++) {
-				string += ctx.ID(i).getText();
+			for (int i = 0; i < ctx.word().size(); i++) {
+				string += ctx.word(i).getText();
 			}
 			strings.add(string);
 			System.out.print(t.recognizer(string) + " ");

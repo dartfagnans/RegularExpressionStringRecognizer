@@ -155,6 +155,18 @@ public class RegularExpressionBaseListener implements RegularExpressionListener 
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStringList(RegularExpressionParser.StringListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWord(RegularExpressionParser.WordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWord(RegularExpressionParser.WordContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
